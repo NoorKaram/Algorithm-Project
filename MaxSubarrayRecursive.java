@@ -1,36 +1,41 @@
+import java.util.Scanner;
+
 public class MaxSubarrayRecursive {
 
-    static int maxSum;
-
     public static int maxSubArray(int[] nums) {
-        maxSum = nums[0];
-        helper(nums, nums.length - 1);
-        return maxSum;
+        int[] maxSum = {nums[0]};
+        helper(nums, nums.length - 1, maxSum);
+        return maxSum[0];
     }
 
-    private static int helper(int[] nums, int index) {
+    private static int helper(int[] nums, int index, int[] maxSum) {
         if (index == 0) {
             return nums[0];
         }
 
-        int prev = helper(nums, index - 1);
-
-        int current;
-        if (prev + nums[index] > nums[index]) {
-            current = prev + nums[index];
-        } else {
-            current = nums[index];
-        }
-
-        if (current > maxSum) {
-            maxSum = current;
-        }
+        int prev = helper(nums, index - 1, maxSum);
+        int current = Math.max(prev + nums[index], nums[index]);
+        maxSum[0] = Math.max(maxSum[0], current);
 
         return current;
     }
 
     public static void main(String[] args) {
-        int[] nums = {1, -2, 3, 4, -1};
-        System.out.println(maxSubArray(nums));
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+
+        int[] nums = new int[n];
+
+        System.out.println("Enter the elements:");
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        int result = maxSubArray(nums);
+        System.out.println(result);
+
+        sc.close();
     }
 }
