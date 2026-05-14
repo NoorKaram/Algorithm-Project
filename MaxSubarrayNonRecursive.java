@@ -1,4 +1,4 @@
- import java.util.Scanner;
+import java.util.Scanner;
 
 public class  MaxSubarrayNonRecursive {
 
@@ -9,9 +9,9 @@ public class  MaxSubarrayNonRecursive {
         }
 
         int current = nums[0];
-        int previous = nums[0];
+        int maxsum = nums[0];
 
-        for (int i = 1; i < index; i++) {
+        for (int i = 1; i < index ; i++) {
 
             if (nums[i] > current + nums[i]) {
                 current = nums[i];
@@ -19,30 +19,49 @@ public class  MaxSubarrayNonRecursive {
                 current = current + nums[i];
             }
 
-            if (current > previous) {
-                previous = current;
+            if (current > maxsum) {
+                maxsum = current;
             }
         }
 
-        return previous;
+        return maxsum;
     }
-
+     public static int readInt(Scanner scanner) {
+        while (true) {
+            if (scanner.hasNextInt()) {
+                return scanner.nextInt();
+            } else {
+                System.out.print("Please enter a valid number: ");
+                scanner.next();  
+            }
+        }
+    }
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter number of elements: ");
-        int index = scanner.nextInt();
+
+       int index;
+
+        while (true) {
+            index = readInt(scanner);
+            if (index > 0) {
+                break;
+            } else {
+                System.out.print("Please enter a positive number: ");
+            }
+        }
 
         int[] nums = new int[index];
 
         System.out.println("Enter the elements:");
 
-        for (int i = 0; i < index; i++) {
-            nums[i] = scanner.nextInt();
+        for (int i = 0; i < index ; i++) {
+            nums[i] = readInt(scanner);
         }
 
-        int result = maxSubarray(nums, index);
+        int result = maxSubarray(nums, index );
 
         System.out.println("Maximum Subarray Sum = " + result);
 
